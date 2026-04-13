@@ -1,0 +1,306 @@
+
+<style>
+
+:root {
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f5f5f5;
+  --color-background-tertiary: #eeeeee;
+
+  --color-text-primary: #111111;
+  --color-text-secondary: #555555;
+  --color-text-tertiary: #888888;
+
+  --color-border-secondary: #c7c7c7;
+  --color-border-tertiary: #dddddd;
+
+  --border-radius-md: 6px;
+  --border-radius-lg: 10px;
+}
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .wrap { padding: 1.25rem 0 2rem; }
+  .section-label { font-size: 10px; font-weight: 500; color: var(--color-text-tertiary); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+  .card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.1rem 1.25rem; margin-bottom: 12px; }
+  .col-heads { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 6px; padding: 0 0 6px; }
+  .col-heads span { font-size: 11px; color: var(--color-text-tertiary); font-weight: 500; }
+  .exam-row { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 6px; align-items: center; margin-bottom: 5px; }
+  .exam-row label { font-size: 13px; color: var(--color-text-secondary); }
+  input[type=number] { font-size: 13px; padding: 5px 8px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); background: var(--color-background-secondary); color: var(--color-text-primary); width: 100%; }
+  input[type=number]:focus { outline: none; box-shadow: 0 0 0 2px var(--color-border-secondary); }
+  .divider-row { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 6px; align-items: center; margin-top: 8px; padding-top: 10px; border-top: 0.5px solid var(--color-border-tertiary); margin-bottom: 5px; }
+  .divider-row label { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+  .toggle-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .toggle-label { font-size: 13px; color: var(--color-text-secondary); }
+  .toggle { position: relative; display: inline-block; width: 36px; height: 20px; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .slider { position: absolute; cursor: pointer; inset: 0; background: #d0d0d0; border-radius: 20px; transition: background 0.2s; }
+  .slider:before { content: ''; position: absolute; width: 14px; height: 14px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: transform 0.2s; }
+  input:checked + .slider { background: #3b6d11; }
+  input:checked + .slider:before { transform: translateX(16px); }
+  .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; }
+  .settings-grid .field label { font-size: 11px; color: var(--color-text-tertiary); display: block; margin-bottom: 4px; font-weight: 500; letter-spacing: 0.04em; }
+  .btn { display: block; width: 100%; padding: 10px; font-size: 13px; font-weight: 500; background: var(--color-background-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); color: var(--color-text-primary); cursor: pointer; margin-top: 12px; letter-spacing: 0.01em; }
+  .btn:hover { background: var(--color-background-secondary); }
+  .btn:active { transform: scale(0.99); }
+  .add-btn { font-size: 12px; color: var(--color-text-tertiary); background: none; border: 0.5px dashed var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 4px 10px; cursor: pointer; margin-top: 4px; }
+  .add-btn:hover { color: var(--color-text-secondary); background: var(--color-background-secondary); }
+  .remove-btn { font-size: 11px; color: var(--color-text-tertiary); background: none; border: none; cursor: pointer; padding: 2px 5px; line-height: 1; }
+  .remove-btn:hover { color: var(--color-text-primary); }
+  .error { font-size: 12px; color: #a32d2d; margin-top: 8px; }
+  .matrix-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; font-size: 12px; min-width: 100%; }
+  thead tr:first-child th { font-size: 10px; font-weight: 500; color: var(--color-text-tertiary); padding: 8px 10px; text-align: center; border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-secondary); letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; }
+  thead tr:first-child th.corner { text-align: left; min-width: 110px; }
+  thead tr.sub-head th { font-size: 11px; color: var(--color-text-secondary); padding: 5px 10px; border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-secondary); text-align: center; font-weight: 400; }
+  thead tr.sub-head th.corner { text-align: left; color: var(--color-text-tertiary); font-size: 10px; }
+  td { padding: 6px 10px; text-align: center; border: 0.5px solid var(--color-border-tertiary); font-size: 12px; font-variant-numeric: tabular-nums; }
+  td.row-label { font-weight: 500; color: var(--color-text-primary); text-align: right; background: var(--color-background-secondary); padding-right: 14px; font-size: 13px; }
+  td.green { background: #d4edda; color: #155724; font-weight: 500; }
+  td.red { background: #f8d7da; color: #721c24; font-weight: 500; }
+  td.impossible { background: var(--color-background-secondary); color: var(--color-text-tertiary); font-size: 11px; }
+  .matrix-meta { margin-bottom: 10px; }
+  .matrix-meta p { font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; }
+  .legend { display: flex; gap: 18px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--color-text-secondary); }
+  .legend-dot { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+</style>
+
+<div class="wrap">
+<h1 style="text-align:center; font-size:28px; margin:20px 0; color:var(--color-text-primary);">
+  Nursing Final Weighted Exam Average Calculator
+</h1>
+  <div class="card">
+    <div class="section-label">Past exams</div>
+    <div class="col-heads">
+      <span></span><span>Score</span><span>Weight</span>
+    </div>
+    <div id="exam-list"></div>
+    <button class="add-btn" onclick="addExam()">+ add exam</button>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Upcoming assessments</div>
+    <div class="col-heads"><span></span><span>Weight</span><span></span></div>
+
+    <div class="toggle-row" style="margin-top:2px;">
+      <label class="toggle">
+        <input type="checkbox" id="use-last" onchange="toggleLast()">
+        <span class="slider"></span>
+      </label>
+      <span class="toggle-label">Include a "last exam" before the final</span>
+    </div>
+
+    <div id="last-exam-row" style="display:none;">
+      <div class="divider-row">
+        <label>Last exam</label>
+        <input type="number" id="last-weight" min="0" max="100" step="1" placeholder="weight">
+        <span></span>
+      </div>
+    </div>
+
+    <div class="divider-row" style="border-top: 0.5px solid var(--color-border-tertiary); margin-top:8px; padding-top:10px;">
+      <label>Final exam</label>
+      <input type="number" id="final-weight" min="0" max="100" step="1" placeholder="weight">
+      <span></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Chart range & options</div>
+    <div class="settings-grid">
+      <div class="field" id="last-range-min-field">
+        <label>Last exam score — min</label>
+        <input type="number" id="last-min" value="50" min="0" max="100" step="5">
+      </div>
+      <div class="field" id="last-range-max-field">
+        <label>Last exam score — max</label>
+        <input type="number" id="last-max" value="100" min="0" max="100" step="5">
+      </div>
+      <div class="field">
+        <label>Target avg — min</label>
+        <input type="number" id="target-min" value="70" min="0" max="100" step="5">
+      </div>
+      <div class="field">
+        <label>Target avg — max</label>
+        <input type="number" id="target-max" value="95" min="0" max="100" step="5">
+      </div>
+      <div class="field">
+        <label>Step size</label>
+        <input type="number" id="step-size" value="5" min="1" max="20" step="1">
+      </div>
+      <div class="field">
+        <label>Green threshold (exam avg ≥)</label>
+        <input type="number" id="threshold" value="76" min="0" max="100" step="1">
+      </div>
+    </div>
+    <div id="error-msg" class="error"></div>
+    <button class="btn" onclick="buildMatrix()">Generate matrix</button>
+  </div>
+
+  <div id="matrix-output"></div>
+</div>
+
+<script>
+let examCount = 0;
+
+function toggleLast() {
+  const on = document.getElementById('use-last').checked;
+  document.getElementById('last-exam-row').style.display = on ? 'block' : 'none';
+  document.getElementById('last-range-min-field').style.display = on ? 'block' : 'none';
+  document.getElementById('last-range-max-field').style.display = on ? 'block' : 'none';
+  const lastW = document.getElementById('last-weight');
+  if (!on) lastW.value = '';
+}
+
+function addExam() {
+  examCount++;
+  const id = examCount;
+  const list = document.getElementById('exam-list');
+
+  const row = document.createElement('div');
+  row.className = 'exam-row';
+  row.id = 'exam-row-' + id;
+
+  row.innerHTML = `
+    <label>Exam ${id}</label>
+    <input type="number" id="score-${id}" min="0" max="100" step="0.1" placeholder="e.g. 84">
+    <div style="display:flex;gap:4px;align-items:center;">
+      <input type="number" id="weight-${id}" min="0" max="100" step="1" placeholder="e.g. 20" style="flex:1;">
+      <button class="remove-btn" onclick="removeExam(${id})">✕</button>
+    </div>
+  `;
+
+  list.appendChild(row);
+}
+
+function removeExam(id) {
+  const el = document.getElementById('exam-row-' + id);
+  if (el) el.remove();
+}
+function renumberExams() {
+  const rows = document.querySelectorAll('.exam-row');
+
+  rows.forEach((row, index) => {
+    const label = row.querySelector('label');
+    label.textContent = `Exam ${index + 1}`;
+  });
+}
+
+function getExams() {
+  const exams = [];
+  document.querySelectorAll('[id^="exam-row-"]').forEach(row => {
+    const id = row.id.replace('exam-row-', '');
+    const score = parseFloat(document.getElementById('score-' + id)?.value);
+    const weight = parseFloat(document.getElementById('weight-' + id)?.value);
+    if (!isNaN(score) && !isNaN(weight) && weight > 0) exams.push({ score, weight });
+  });
+  return exams;
+}
+
+function buildMatrix() {
+  const err = document.getElementById('error-msg');
+  err.textContent = '';
+
+  const useLast = document.getElementById('use-last').checked;
+  const exams = getExams();
+  const lastW = useLast ? parseFloat(document.getElementById('last-weight').value) : 0;
+  const finalW = parseFloat(document.getElementById('final-weight').value);
+  const targetMin = parseInt(document.getElementById('target-min').value);
+  const targetMax = parseInt(document.getElementById('target-max').value);
+  const step = parseInt(document.getElementById('step-size').value);
+  const threshold = parseFloat(document.getElementById('threshold').value);
+
+  if (useLast && (isNaN(lastW) || lastW <= 0)) { err.textContent = 'Enter a valid last exam weight.'; return; }
+  if (isNaN(finalW) || finalW <= 0) { err.textContent = 'Enter a valid final exam weight.'; return; }
+  if (targetMin >= targetMax) { err.textContent = 'Target avg min must be less than max.'; return; }
+  if (step < 1) { err.textContent = 'Step must be at least 1.'; return; }
+
+  const totalW = exams.reduce((s, e) => s + e.weight, 0) + (useLast ? lastW : 0) + finalW;
+  const finalWn = finalW / totalW;
+  const lastWn = useLast ? lastW / totalW : 0;
+  const lockedPts = exams.reduce((s, e) => s + e.score * (e.weight / totalW), 0);
+
+  const targetAvgs = [];
+  for (let v = targetMin; v <= targetMax; v += step) targetAvgs.push(v);
+  if (!targetAvgs.length) { err.textContent = 'Target range produces no values.'; return; }
+
+  let rowValues = [null]; // null = "any last exam score" when not using last
+  if (useLast) {
+    const lastMin = parseInt(document.getElementById('last-min').value);
+    const lastMax = parseInt(document.getElementById('last-max').value);
+    if (lastMin >= lastMax) { err.textContent = 'Last exam score min must be less than max.'; return; }
+    rowValues = [];
+    for (let v = lastMin; v <= lastMax; v += step) rowValues.push(v);
+  }
+
+  // Column header group label
+  const colGroupLabel = useLast
+    ? 'Desired weighted exam average'
+    : 'Desired weighted exam average';
+
+  const rowAxisLabel = useLast ? 'Last exam score' : '';
+
+  let html = `<div class="matrix-meta">
+    <p>
+      ${useLast
+        ? `<strong>Rows</strong> — possible last exam score &nbsp;·&nbsp; <strong>Columns</strong> — desired weighted exam average &nbsp;·&nbsp; <strong>Cells</strong> — required final exam score`
+        : `<strong>Columns</strong> — desired weighted exam average &nbsp;·&nbsp; <strong>Cells</strong> — required final exam score`
+      }<br>
+      Color reflects whether the target average is ≥ ${threshold} (green) or &lt; ${threshold} (red).
+    </p>
+  </div>
+  <div class="matrix-wrap"><table>
+    <thead>
+      <tr>
+        <th class="corner">${useLast ? 'Last exam score' : ''}</th>
+        ${targetAvgs.map(t => `<th>${t}</th>`).join('')}
+      </tr>
+    </thead>
+    <tbody>`;
+
+  rowValues.forEach(lastScore => {
+    html += `<tr>`;
+    if (useLast) {
+      html += `<td class="row-label">${lastScore}</td>`;
+    } else {
+      html += `<td class="row-label" style="display:none;"></td>`;
+    }
+
+    targetAvgs.forEach(target => {
+      const needed = useLast
+        ? (target - lockedPts - lastScore * lastWn) / finalWn
+        : (target - lockedPts) / finalWn;
+
+      let cls, display;
+      if (needed > 100) {
+        cls = 'impossible'; display = '> 100';
+      } else if (needed < 0) {
+        cls = target >= threshold ? 'green' : 'red';
+        display = '< 0';
+      } else {
+        cls = target >= threshold ? 'green' : 'red';
+        display = needed.toFixed(1);
+      }
+      html += `<td class="${cls}">${display}</td>`;
+    });
+    html += '</tr>';
+  });
+
+  html += `</tbody></table></div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#d4edda;border:1px solid #c3e6cb;"></div>Exam avg ≥ ${threshold} — final score shown is achievable</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f8d7da;border:1px solid #f5c6cb;"></div>Exam avg &lt; ${threshold}</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);"></div>Not achievable (final &gt; 100)</div>
+  </div>`;
+
+  document.getElementById('matrix-output').innerHTML = `<div class="card">${html}</div>`;
+}
+
+// Hide last-exam range fields by default
+document.getElementById('last-range-min-field').style.display = 'none';
+document.getElementById('last-range-max-field').style.display = 'none';
+
+addExam();
+addExam();
+addExam();
+</script>
